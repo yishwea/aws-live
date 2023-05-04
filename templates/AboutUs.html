@@ -7,12 +7,23 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
+      background-color: blanchedalmond;
     }
 
     h1 {
       color: #333;
-      font-size: 28px;
+      font-size: 40px;
+      margin-left: 300px;
+      margin-right: 300px;
       margin-bottom: 30px;
+    }
+
+    h2{
+        padding-bottom: 50px;
+    }
+
+    p{
+        padding-bottom: 10px;
     }
 
     .team-member {
@@ -22,8 +33,8 @@
     }
 
     .team-member img {
-      width: 100px;
-      height: 100px;
+      width: 150px;
+      height: 200px;
       margin-right: 20px;
     }
 
@@ -38,39 +49,62 @@
       font-size: 16px;
       margin: 0;
     }
+
+    .row{
+        border-style: solid;
+        border-color: #333;
+        border-width: 5px;
+        margin-left: 300px;
+        margin-right: 300px;
+    }
+
+    .row div{
+        padding-left: 30px;
+        padding-top: 30px;
+    }
+
+    .back{
+        padding-left: 400px;
+        padding-bottom: 15px;
+    }
+
   </style>
 </head>
 <body>
   <h1>Meet the Team</h1>
-
-  <div class="team-member">
-    <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/czm.jpg" alt="Team Member 1">
-    <div>
-      <h2>Chia Zheng May</h2>
-      <p>Position: Developer</p>
-      <p>Experience: 5 years</p>
-    </div>
+  <div class="row">
+    <div class="team-member">
+        <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/czm.jpg" alt="Team Member 1">
+        <div>
+          <h2>Chia Zheng May</h2>
+          <p>Expert in: Cloud Computing</p>
+          <p>Experience: 5 years</p>
+          <form> <button type="submit" formaction="/">View More</button></form>
+        </div>
+      </div>
+    
+      <div class="team-member">
+        <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/ys.jpg" alt="Team Member 2">
+        <div>
+          <h2>Goh Yi Shwea</h2>
+          <p>Expert in: Cloud Computing</p>
+          <p>Experience: 6 years</p>
+          <form> <button type="submit" formaction="/">View More</button></form>
+        </div>
+      </div>
+    
+      <div class="team-member">
+        <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/zb.jpg" alt="Team Member 3">
+        <div>
+          <h2>Koh Zheng Bin</h2>
+          <p>Expert in: Cloud Computing</p>
+          <p>Experience: 4 years</p>
+          <form> <button type="submit" formaction="/">View More</button></form>
+        </div>
+      </div>
+      <form class="back">
+        <button type="submit" formaction="/" style="background-color: cadetblue; font-size: medium; color: black;">Back</button>
+      </form>
   </div>
-
-  <div class="team-member">
-    <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/ys.jpg" alt="Team Member 2">
-    <div>
-      <h2>Goh Yi Shwea</h2>
-      <p>Position: Designer</p>
-      <p>Experience: 3 years</p>
-    </div>
-  </div>
-
-  <div class="team-member">
-    <img src="https://raw.githubusercontent.com/Dusty890/aws-live/main/templates/zb.jpg" alt="Team Member 3">
-    <div>
-      <h2>Koh Zheng Bin</h2>
-      <p>Position: Project Manager</p>
-      <p>Experience: 7 years</p>
-    </div>
-  </div>
-  <form>
-    <button type="submit" formaction="/" style="background-color: cadetblue; font-size: medium; color: black;">Back</button>
-  </form>
 </body>
 </html>
