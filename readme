@@ -5,6 +5,7 @@
 sudo su
 yum update -y
 yum install git -y
+git push https://github.com/Dusty890/aws-live.git
 git clone https://github.com/Dusty890/aws-live.git
 cd aws-live
 pip3 install flask
