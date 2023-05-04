@@ -26,7 +26,7 @@ def home():
     return render_template('AddEmp.html')
 
 
-@app.route("/about", methods=['GET'])
+@app.route("/about")
 def about():
     return render_template('AboutUs.html')
 
