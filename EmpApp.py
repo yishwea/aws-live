@@ -194,11 +194,11 @@ def FetchData():
     lname=dLastName, interest=dPriSkill, location=dLocation, image_url=url)
 
 @app.route("/gotogetemp")
-def getemp():
+def gotogetemp():
     return render_template('GetEmp.html')
 
 @app.route("/gotoupdateemp")
-def upemp():
+def gotoupdateemp():
     return render_template('UpdateEmp.html')
 
 @app.route("/gotoaddemp")
