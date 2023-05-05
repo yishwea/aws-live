@@ -193,6 +193,47 @@ def FetchData():
     return render_template("GetEmpOutput.html", id=dEmpID, fname=dFirstName, 
     lname=dLastName, interest=dPriSkill, location=dLocation, image_url=url)
 
+@app.route("/delemp", methods=['POST'])
+def delemp():
+    # Get Employee
+    emp_id = request.form['emp_id']
+    # SELECT STATEMENT TO GET DATA FROM MYSQL
+    select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
+    selectCmd = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
+    deleteCmd = "DELETE FROM employee WHERE emp_id = %(emp_id)s"
+    cursor = db_conn.cursor()
+    cursor1 = db_conn.cursor()
+    key = "emp-id-" + str(emp_id) + "_image_file.png"
+    s3 = boto3.client('s3')
+    
+    cursor.execute(select_sql, (emp_id,))
+    result = cursor.fetchone()
+
+    try:
+       if result[0] == 0:
+          return "Employee ID does not exist. Please enter a valid ID"
+        
+        cursor.execute(selectCmd, {'emp_id': int(emp_id)})
+        cursor1.execute(deleteCmd, {'emp_id': int(emp_id)})
+        # FETCH ONLY ONE ROWS OUTPUT
+        row = cursor.fetchone()
+        dempid = row[0]
+        dFirstName = row[1]
+        dLastName = row[2]
+        emp_name = "" + dFirstName + " " + dLastName
+        db_conn.commit()
+
+        s3.delete_object(Bucket=custombucket, Key=key)
+    except Exception as e:
+        db_conn.rollback()
+        return str(e)
+
+    finally:
+        cursor.close()
+        cursor1.close()
+
+    return render_template('DeleteEmpOutput.html', id=dempid, name=emp_name)
+
 @app.route("/gotogetemp")
 def gotogetemp():
     return render_template('GetEmp.html')
