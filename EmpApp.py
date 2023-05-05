@@ -53,7 +53,7 @@ def AddEmp():
         cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
 
-        if result result[0] > 0:
+        if result[0] > 0:
             return "Employee ID already exists. Please enter a different ID"
         
         # Validate salary as a number
