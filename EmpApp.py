@@ -42,7 +42,7 @@ def AddEmp():
     emp_image_file = request.files['emp_image_file']
 
     select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
