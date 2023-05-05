@@ -211,7 +211,7 @@ def delemp():
 
     try:
        if result[0] == 0:
-          return "Employee ID does not exist. Please enter a valid ID"
+        return "Employee ID does not exist. Please enter a valid ID"
         
         cursor.execute(selectCmd, (emp_id,))
         cursor1.execute(deleteCmd, (emp_id,))
