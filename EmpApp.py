@@ -159,8 +159,8 @@ def FetchData():
 
 
     try:
-        if result is None:
-            return "Employee ID not exists, Please enter a different ID"
+        if result[0] == 0:
+            return "Employee ID does not exist. Please enter a different ID"
             
         #Getting Employee Data
         cursor.execute(sqlCmd, (emp_id))
