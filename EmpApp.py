@@ -38,28 +38,34 @@ def AddEmp():
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
     location = request.form['location']
+    salary = request.form['salary']
     emp_image_file = request.files['emp_image_file']
 
-    # Check if emp_id already exists in the database
-    select_sql = "SELECT emp_id FROM employee WHERE emp_id = %s"
+    select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
-    cursor.execute(select_sql, (emp_id,))
-    result = cursor.fetchone()
 
-    if result:
-        # emp_id already exists, return error message
-        return "Employee ID already exists in the database"
-
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
-    
     if emp_image_file.filename == "":
         return "Please select a file"
 
     try:
-        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location))
+        # Check if emp_id already exists in the database
+        cursor.execute(select_sql, (emp_id,))
+        result = cursor.fetchone()
+
+        if result is not None:
+            return "Employee ID already exists. Please enter a different ID"
+                # Validate salary as a number
+    try:
+        salary = float(salary)
+    except ValueError:
+        return "Salary must be a number"
+
+        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, salary))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
-        # Upload image file in S3 #
+
+        # Upload image file to S3
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
 
