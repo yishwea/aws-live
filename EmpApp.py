@@ -166,16 +166,17 @@ def FetchData():
     if emp_id == "":
         return "Please enter an employee ID"
 
+    url = None  # Initialize url with a default value
 
     try:
-        cursor.execute(select_sql, (emp_id,))
+        cursor.execute(select_sql, ((emp_id,),))
         result = cursor.fetchone()
 
         if result[0] == 0:
             return "Employee ID not exists, Please enter a different ID"
 
-        #Getting Employee Data
-        cursor.execute(sqlCmd, (emp_id,))
+        # Getting Employee Data
+        cursor.execute(sqlCmd, ((emp_id,),))
         row = cursor.fetchone()
         dEmpID = row[0]
         dFirstName = row[1]
@@ -186,16 +187,10 @@ def FetchData():
 
         key = "emp-id-" + str(emp_id) + "_image_file.png"
 
-        # Get Image URL
-        # bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-        # s3_location = (bucket_location['LocationConstraint'])
-
         s3_client = boto3.client('s3')
         for item in s3_client.list_objects(Bucket=custombucket)['Contents']:
-            if(item['Key'] == key):
-                url = s3_client.generate_presigned_url('get_object', Params = {'Bucket': bucket, 'Key': item['Key']})
-
-        #url = "https://%s.s3.amazonaws.com/%s" % (custombucket, key)
+            if item['Key'] == key:
+                url = s3_client.generate_presigned_url('get_object', Params={'Bucket': custombucket, 'Key': item['Key']})
 
     except Exception as e:
         return str(e)
@@ -203,8 +198,7 @@ def FetchData():
     finally:
         cursor.close()
 
-    return render_template("GetEmpOutput.html", id=dEmpID, fname=dFirstName, 
-    lname=dLastName, interest=dPriSkill, location=dLocation, salary=dSalary, image_url=url)
+    return render_template("GetEmpOutput.html", id=dEmpID, fname=dFirstName, lname=dLastName, interest=dPriSkill, location=dLocation, salary=dSalary, image_url=url)
 
 @app.route("/getemp")
 def getemp():
