@@ -202,15 +202,15 @@ def upemp():
     return render_template('UpdateEmp.html')
 
 @app.route("/zb")
-def upemp():
+def zb():
     return render_template('zb.html')
 
 @app.route("/zm")
-def upemp():
+def zm():
     return render_template('zm.html')
 
 @app.route("/ys")
-def upemp():
+def ys():
     return render_template('ys.html')
 
 if __name__ == '__main__':
