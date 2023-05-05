@@ -53,13 +53,14 @@ def AddEmp():
         cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
 
-        if result is not None:
+        if result result[0] > 0:
             return "Employee ID already exists. Please enter a different ID"
-                # Validate salary as a number
-    try:
-        salary = float(salary)
-    except ValueError:
-        return "Salary must be a number"
+        
+        # Validate salary as a number
+        try:
+            salary = float(salary)
+        except ValueError:
+            return "Salary must be a number"
 
         cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, salary))
         db_conn.commit()
@@ -102,20 +103,26 @@ def UpEmp():
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
     location = request.form['location']
+    salary = request.form['salary']
     emp_image_file = request.files['emp_image_file']
 
     select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
-    edit_sql = "UPDATE employee SET first_name=%s, last_name=%s, pri_skill=%s, location=%s WHERE emp_id=%s"
+    edit_sql = "UPDATE employee SET first_name=%s, last_name=%s, pri_skill=%s, location=%s, salary=%s WHERE emp_id=%s"
     cursor = db_conn.cursor()
-    
-    cursor.execute(select_sql, (emp_id,))
-    result = cursor.fetchone()
 
     try:
-        if result[0] == 0:
-            return "Employee ID does not exist. Please enter a different ID"
+        cursor.execute(select_sql, (emp_id,))
+        result = cursor.fetchone()
 
-        cursor.execute(edit_sql, (first_name, last_name, pri_skill, location, emp_id))
+        if result result[0] == 0:
+            return "Employee ID not exists, Please enter a different ID"
+        
+        try:
+            salary = float(salary)
+        except ValueError:
+            return "Salary must be a number"
+
+        cursor.execute(edit_sql, (first_name, last_name, pri_skill, location, salary, emp_id))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
 
@@ -159,15 +166,14 @@ def FetchData():
     if emp_id == "":
         return "Please enter an employee ID"
 
-    cursor.execute(select_sql, (emp_id,))
-    result = cursor.fetchone()
-
-
 
     try:
-        if result[0] == 0:
-            return "Employee ID does not exist. Please enter a different ID"
-            
+        cursor.execute(select_sql, (emp_id))
+        result = cursor.fetchone()
+
+        if result result[0] == 0:
+            return "Employee ID not exists, Please enter a different ID"
+
         #Getting Employee Data
         cursor.execute(sqlCmd, (emp_id))
         row = cursor.fetchone()
@@ -176,6 +182,7 @@ def FetchData():
         dLastName = row[2]
         dPriSkill = row[3]
         dLocation = row[4]
+        dSalary = row[5]
 
         key = "emp-id-" + str(emp_id) + "_image_file.png"
 
@@ -197,7 +204,16 @@ def FetchData():
         cursor.close()
 
     return render_template("GetEmpOutput.html", id=dEmpID, fname=dFirstName, 
-    lname=dLastName, interest=dPriSkill, location=dLocation, image_url=url)
+    lname=dLastName, interest=dPriSkill, location=dLocation, salary=dSalary, image_url=url)
+
+@app.route("/getemp")
+def getemp():
+    return render_template('GetEmp.html')
+
+@app.route("/upemp")
+def upemp():
+    return render_template('UpdateEmp.html')
+
 
 @app.route("/delemp", methods=['POST'])
 def delemp():
@@ -211,14 +227,14 @@ def delemp():
     cursor1 = db_conn.cursor()
     key = "emp-id-" + str(emp_id) + "_image_file.png"
     s3 = boto3.client('s3')
-
-    cursor.execute(select_sql, (emp_id,))
-    result = cursor.fetchone()
+    
 
     try:
+        cursor.execute(select_sql, (emp_id,))
+        result = cursor.fetchone()
         if result[0] == 0:
             return "Employee ID does not exist. Please enter a valid ID"
-
+        
         cursor.execute(selectCmd, (emp_id,))
         cursor1.execute(deleteCmd, (emp_id,))
         # FETCH ONLY ONE ROWS OUTPUT
