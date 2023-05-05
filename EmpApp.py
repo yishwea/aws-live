@@ -106,8 +106,8 @@ def UpEmp():
     result = cursor.fetchone()
 
     try:
-        if result is None:
-            return "Employee ID not exists, Please enter a different ID"
+        if result[0] == 0:
+            return "Employee ID does not exist. Please enter a different ID"
 
         cursor.execute(edit_sql, (first_name, last_name, pri_skill, location, emp_id))
         db_conn.commit()
