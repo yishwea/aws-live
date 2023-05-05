@@ -317,6 +317,32 @@ def avgsalarybylocation():
 
     return render_template("AvgSalaryOutput.html", emp_qty=dempqty, avg_salary=davgsalary, location=location)
 
+@app.route("/top3salarybyskill", methods=['GET', 'POST'])
+def top3salarybyskill():
+    skill = request.form['skill']
+    select_sql = "SELECT COUNT(*) FROM employee WHERE pri_skill = %s"
+    top3_sql = "SELECT emp_id, salary FROM employee WHERE pri_skill = %s ORDER BY salary DESC LIMIT 3"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql, (skill,))
+        result = cursor.fetchone()
+
+        if result[0] == 0:
+            return "No employees have such primary skill. Please select a valid skill."
+
+        # Top 3 Salaries
+        cursor.execute(top3_sql, (skill,))
+        top3_salaries = [row[1] for row in cursor.fetchall()]
+
+    except Exception as e:
+        return str(e)
+        
+    finally:
+        cursor.close()
+
+    return render_template("Top3SalaryOutput.html", skill=skill, top3_salaries=top3_salaries)
+
 @app.route("/gotogetemp")
 def gotogetemp():
     return render_template('GetEmp.html')
@@ -340,6 +366,10 @@ def gotototalsalary():
 @app.route("/toavgsalary")
 def toavgsalary():
     return render_template('AvgSalary.html')
+
+@app.route("/totop3salary")
+def totop3salary():
+    return render_template('Top3Salary.html')
 
 @app.route("/zb")
 def zb():
