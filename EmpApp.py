@@ -289,6 +289,34 @@ def caltotalsalary():
 
     return render_template("TotalSalaryOutput.html", min_id=dmin_EmpID, max_id=dmax_EmpID, total=dtotal)
 
+@app.route("/avgsalarybylocation", methods=['GET', 'POST'])
+def avgsalarybylocation():
+    location = request.form['location']
+    select_sql = "SELECT COUNT(*) FROM employee WHERE location = %s"
+    sqlCmd = "SELECT AVG(salary) AS avgsalary FROM employee WHERE location = %s"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql, (location,))
+        result = cursor.fetchone()
+
+        if result[0] == 0:
+            return "No employee live or work in this location. Please select a valid location."
+
+        # Getting Employee Data
+        dempqty = result[0]
+        cursor.execute(sqlCmd, (location,))
+        row = cursor.fetchone()
+        davgsalary = row[0]
+
+    except Exception as e:
+        return str(e)
+        
+    finally:
+        cursor.close()
+
+    return render_template("AvgSalaryOutput.html", emp_qty=dempqty, avg_salary=davgsalary, location=location)
+
 @app.route("/gotogetemp")
 def gotogetemp():
     return render_template('GetEmp.html')
@@ -308,6 +336,10 @@ def gotodeleteemp():
 @app.route("/gotototalsalary")
 def gotototalsalary():
     return render_template('TotalSalary.html')
+
+@app.route("/toavgsalary")
+def toavgsalary():
+    return render_template('AvgSalary.html')
 
 @app.route("/zb")
 def zb():
