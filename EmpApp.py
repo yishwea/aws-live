@@ -201,17 +201,5 @@ def getemp():
 def upemp():
     return render_template('UpdateEmp.html')
 
-@app.route("/zb")
-def about():
-    return render_template('../templates/zb.html')
-
-@app.route("/zm")
-def about():
-    return render_template('../templates/zm.html')
-
-@app.route("/ys")
-def about():
-    return render_template('../templates/ys.html')
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
