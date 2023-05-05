@@ -199,8 +199,8 @@ def delemp():
     emp_id = request.form['emp_id']
     # SELECT STATEMENT TO GET DATA FROM MYSQL
     select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
-    selectCmd = "SELECT * FROM employee WHERE emp_id = %(emp_id)s"
-    deleteCmd = "DELETE FROM employee WHERE emp_id = %(emp_id)s"
+    selectCmd = "SELECT * FROM employee WHERE emp_id = %s"
+    deleteCmd = "DELETE FROM employee WHERE emp_id = %s"
     cursor = db_conn.cursor()
     cursor1 = db_conn.cursor()
     key = "emp-id-" + str(emp_id) + "_image_file.png"
@@ -213,8 +213,8 @@ def delemp():
        if result[0] == 0:
           return "Employee ID does not exist. Please enter a valid ID"
         
-        cursor.execute(selectCmd, {'emp_id': int(emp_id)})
-        cursor1.execute(deleteCmd, {'emp_id': int(emp_id)})
+        cursor.execute(selectCmd, (emp_id,))
+        cursor1.execute(deleteCmd, (emp_id,))
         # FETCH ONLY ONE ROWS OUTPUT
         row = cursor.fetchone()
         dempid = row[0]
