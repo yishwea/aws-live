@@ -201,6 +201,10 @@ def getemp():
 def upemp():
     return render_template('UpdateEmp.html')
 
+@app.route("/gotoaddemp")
+def gotoaddemp():
+    return render_template('AddEmp.html')
+
 @app.route("/zb")
 def zb():
     return render_template('zb.html')
