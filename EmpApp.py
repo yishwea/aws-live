@@ -141,7 +141,7 @@ def UpEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('EditEmpOutput.html', name=emp_name, id=emp_id)
+    return render_template('UpdateEmpOutput.html', name=emp_name, id=emp_id)
 
 @app.route("/fetchdata", methods=['GET', 'POST'])
 def FetchData():
