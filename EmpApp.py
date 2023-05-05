@@ -301,13 +301,13 @@ def avgsalarybylocation():
         result = cursor.fetchone()
 
         if result[0] == 0:
-            return "No employee live or work in this location. Please select a valid location."
+            return "No employee lives or works in this location. Please select a valid location."
 
         # Getting Employee Data
         dempqty = result[0]
         cursor.execute(sqlCmd, (location,))
         row = cursor.fetchone()
-        davgsalary = row[0]
+        davgsalary = round(row[0], 2)  # Round the average salary to 2 decimal places
 
     except Exception as e:
         return str(e)
