@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Top 3 Salary Listed</title>
+</head>
+<center>
+	<font color="DodgerBlue" size="5" style="font-family: avenir">
+		<body bgcolor="lightgrey">
+			<h1>EXECUTION COMPLETED</h1><br>
+			<h2>Top 3 Salaries:</h2><br>
+			<ul>
+        {% for emp_id, salary in top3_salaries %}
+          <li>Employee ID {{ emp_id }} : $ {{ salary }}</li>
+        {% endfor %}
+      </ul>
+			<form>
+				<button type="submit" formaction="/totop3salary" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GO BACK</button><br><br>
+			</form>
+		</body>
+	</font>
+</center>
+
+<body>
+
+</body>
+</html>
