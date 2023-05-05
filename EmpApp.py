@@ -333,7 +333,7 @@ def top3salarybyskill():
 
         # Top 3 Salaries
         cursor.execute(top3_sql, (skill,))
-        top3_salaries = [row[1] for row in cursor.fetchall()]
+        top3_salaries = [{'emp_id': row[0], 'salary': row[1]} for row in cursor.fetchall()]
 
     except Exception as e:
         return str(e)
