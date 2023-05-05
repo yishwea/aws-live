@@ -305,7 +305,7 @@ def gotodeleteemp():
     return render_template('DeleteEmp.html')
 
 @app.route("/gotototalsalary")
-def gotodeleteemp():
+def gotototalsalary():
     return render_template('TotalSalary.html')
 
 @app.route("/zb")
