@@ -250,6 +250,44 @@ def delemp():
 
     return render_template('DeleteEmpOutput.html', id=dempid, name=emp_name)
 
+@app.route("/caltotalsalary", methods=['GET', 'POST'])
+def caltotalsalary():
+    min_emp_id = request.form['min_emp_id']
+    max_emp_id = request.form['max_emp_id']
+    select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id BETWEEN %s AND %s"
+    sqlCmd = "SELECT SUM(salary) AS totalsalary FROM employee WHERE emp_id BETWEEN %s AND %s"
+    cursor = db_conn.cursor()
+
+    if min_emp_id == "" or max_emp_id == "":
+        return "Please enter an employee ID"
+
+    if min_emp_id > max_emp_id:
+        temp_id = min_emp_id
+        min_emp_id = max_emp_id
+        max_emp_id = temp_id
+
+    try:
+        cursor.execute(select_sql, (min_emp_id, max_emp_id))
+        result = cursor.fetchone()
+
+        if result result[0] == int(max_emp_id):
+            return "Not all employee ID exist, Please select within a valid range"
+
+        #Getting Employee Data
+        cursor.execute(sqlCmd, (min_emp_id, max_emp_id))
+        row = cursor.fetchone()
+        dmin_EmpID = min_emp_id
+        dmax_EmpID = max_emp_id
+        dtotal = row[0]
+
+    except Exception as e:
+        return str(e)
+        
+    finally:
+        cursor.close()
+
+    return render_template("TotalSalaryOutput.html", min_id=dmin_EmpID, max_id=dmax_EmpID, total=dtotal)
+
 @app.route("/gotogetemp")
 def gotogetemp():
     return render_template('GetEmp.html')
