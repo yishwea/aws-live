@@ -9,8 +9,8 @@
             <h1>EXECUTION COMPLETED</h1><br>
             <h2>Top 3 Salaries:</h2><br>
             <ul>
-                {% for emp_id, salary in top3_salaries %}
-                    <li>Employee ID {{ emp_id }} : $ {{ salary }}</li>
+                {% for item in top3_salaries %}
+                    <li>Employee ID {{ item.emp_id }}: ${{ item.salary }}</li>
                 {% endfor %}
             </ul>
             <form>
