@@ -26,9 +26,9 @@ def home():
     return render_template('index.html')
 
 
-@app.route("/about")
-def about():
-    return render_template('AboutUs.html')
+@app.route("/employee")
+def employee():
+    return render_template('employeehome.html')
 
 
 @app.route("/addemp", methods=['POST'])
