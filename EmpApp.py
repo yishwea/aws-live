@@ -101,11 +101,11 @@ def UpEmp():
     select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
     edit_sql = "UPDATE employee SET first_name=%s, last_name=%s, pri_skill=%s, location=%s WHERE emp_id=%s"
     cursor = db_conn.cursor()
+    
+    cursor.execute(select_sql, (emp_id,))
+    result = cursor.fetchone()
 
     try:
-        cursor.execute(select_sql, (emp_id))
-        result = cursor.fetchone()
-
         if result is None:
             return "Employee ID not exists, Please enter a different ID"
 
@@ -153,13 +153,15 @@ def FetchData():
     if emp_id == "":
         return "Please enter an employee ID"
 
-    cursor.execute(select_sql, (emp_id))
+    cursor.execute(select_sql, (emp_id,))
     result = cursor.fetchone()
 
-    if result is None:
-        return "Employee ID not exists, Please enter a different ID"
+
 
     try:
+        if result is None:
+            return "Employee ID not exists, Please enter a different ID"
+            
         #Getting Employee Data
         cursor.execute(sqlCmd, (emp_id))
         row = cursor.fetchone()
