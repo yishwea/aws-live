@@ -46,15 +46,15 @@ def AddEmp():
 
     if emp_image_file.filename == "":
         return "Please select a file"
+        
+     # Check if emp_id already exists in the database
+     cursor.execute(select_sql, (emp_id,))
+     result = cursor.fetchone()
+
+     if result is not None:
+        return "Employee ID already exists, Please enter a different ID"
 
     try:
-        # Check if emp_id already exists in the database
-        cursor.execute(select_sql, (emp_id,))
-        result = cursor.fetchone()
-
-        if result is not None:
-            return "Employee ID already exists, Please enter a different ID"
-
         cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location))
         db_conn.commit()
         emp_name = "" + first_name + " " + last_name
