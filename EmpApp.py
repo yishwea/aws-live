@@ -114,7 +114,7 @@ def UpEmp():
         cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
 
-        if result result[0] == 0:
+        if result[0] == 0:
             return "Employee ID not exists, Please enter a different ID"
         
         try:
@@ -171,7 +171,7 @@ def FetchData():
         cursor.execute(select_sql, (emp_id))
         result = cursor.fetchone()
 
-        if result result[0] == 0:
+        if result[0] == 0:
             return "Employee ID not exists, Please enter a different ID"
 
         #Getting Employee Data
