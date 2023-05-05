@@ -270,7 +270,7 @@ def caltotalsalary():
         cursor.execute(select_sql, (min_emp_id, max_emp_id))
         result = cursor.fetchone()
 
-        if result result[0] == int(max_emp_id):
+        if result[0] == int(max_emp_id):
             return "Not all employee ID exist, Please select within a valid range"
 
         #Getting Employee Data
