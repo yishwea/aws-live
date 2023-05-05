@@ -213,40 +213,33 @@ def upemp():
 def delemp():
     # Get Employee
     emp_id = request.form['emp_id']
+    # SELECT STATEMENT TO GET DATA FROM MYSQL
     select_sql = "SELECT COUNT(*) FROM employee WHERE emp_id = %s"
-    selectCmd = "SELECT emp_id, first_name, last_name FROM employee WHERE emp_id = %s"
-    updateCmd = "UPDATE employee SET emp_id = %s WHERE emp_id = %s"
+    selectCmd = "SELECT * FROM employee WHERE emp_id = %s"
     deleteCmd = "DELETE FROM employee WHERE emp_id = %s"
     cursor = db_conn.cursor()
     cursor1 = db_conn.cursor()
     key = "emp-id-" + str(emp_id) + "_image_file.png"
     s3 = boto3.client('s3')
+    
 
     try:
         cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
         if result[0] == 0:
             return "Employee ID does not exist. Please enter a valid ID"
-
+        
         cursor.execute(selectCmd, (emp_id,))
+        cursor1.execute(deleteCmd, (emp_id,))
+        # FETCH ONLY ONE ROWS OUTPUT
         row = cursor.fetchone()
         dempid = row[0]
         dFirstName = row[1]
         dLastName = row[2]
         emp_name = "" + dFirstName + " " + dLastName
-
-        # Get the next emp_id
-        next_emp_id = str(int(emp_id) + 1)
-
-        # Update the emp_id for the following employee
-        cursor.execute(updateCmd, (emp_id, next_emp_id))
-
-        # Delete the employee
-        cursor1.execute(deleteCmd, (emp_id,))
         db_conn.commit()
 
         s3.delete_object(Bucket=custombucket, Key=key)
-
     except Exception as e:
         db_conn.rollback()
         return str(e)
