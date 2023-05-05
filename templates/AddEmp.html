@@ -10,10 +10,11 @@
 
 		<body bgcolor="lightgrey">
 
+			<form>
+			      <button type="submit" formaction="/getemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br>
+			      <button type="submit" formaction="/upemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">UPDATE EMPLOYEE INFORMATION</button><br><br>
+			</form>
 			<form action="/addemp" autocomplete="on" method = "POST" enctype="multipart/form-data">
-
-				<button type="submit" formaction="/getemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GET EMPLOYEE INFORMATION</button><br><br>
-				<button type="submit" formaction="/upemp" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">UPDATE EMPLOYEE INFORMATION</button><br><br>
 
 		  		Employee ID:<br> <input style="height:25px;font-size:14pt; color:grey;" type="number" name="emp_id" autofocus size="40"><br><br>
 
