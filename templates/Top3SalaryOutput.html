@@ -2,21 +2,31 @@
 <html>
 <head>
     <title>Top 3 Salary Listed</title>
+    <style>
+        ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+        
+        li {
+            padding-top: 5px;
+        }
+    </style>
 </head>
-<center>
-    <font color="DodgerBlue" size="5" style="font-family: avenir">
-        <body bgcolor="lightgrey">
-            <h1>EXECUTION COMPLETED</h1><br>
-            <h2>Top 3 Salaries:</h2><br>
-            <ul>
-                {% for item in top3_salaries %}
-                    <li>Employee ID {{ item.emp_id }}: ${{ item.salary }}</li>
-                {% endfor %}
-            </ul>
-            <form>
-                <button type="submit" formaction="/totop3salary" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GO BACK</button><br><br>
-            </form>
-        </body>
-    </font>
-</center>
+    <center>
+        <font color="DodgerBlue" size="5" style="font-family: avenir">
+            <body bgcolor="lightgrey">
+                <h1>EXECUTION COMPLETED</h1><br>
+                <h2>Top 3 Salaries:</h2>
+                <ul>
+                    {% for item in top3_salaries %}
+                        <li>Employee ID {{ item.emp_id }}: ${{ item.salary }}</li>
+                    {% endfor %}
+                </ul>
+                <form>
+                    <button type="submit" formaction="/totop3salary" style="background: grey; height: 45px; width: 200px; color:white; font:oblique;">GO BACK</button><br><br>
+                </form>
+            </body>
+        </font>
+    </center>
 </html>
