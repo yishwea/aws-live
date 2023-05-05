@@ -168,14 +168,14 @@ def FetchData():
 
 
     try:
-        cursor.execute(select_sql, (emp_id))
+        cursor.execute(select_sql, (emp_id,))
         result = cursor.fetchone()
 
         if result[0] == 0:
             return "Employee ID not exists, Please enter a different ID"
 
         #Getting Employee Data
-        cursor.execute(sqlCmd, (emp_id))
+        cursor.execute(sqlCmd, (emp_id,))
         row = cursor.fetchone()
         dEmpID = row[0]
         dFirstName = row[1]
