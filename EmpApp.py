@@ -193,17 +193,21 @@ def FetchData():
     return render_template("GetEmpOutput.html", id=dEmpID, fname=dFirstName, 
     lname=dLastName, interest=dPriSkill, location=dLocation, image_url=url)
 
-@app.route("/getemp")
+@app.route("/gotogetemp")
 def getemp():
     return render_template('GetEmp.html')
 
-@app.route("/upemp")
+@app.route("/gotoupdateemp")
 def upemp():
     return render_template('UpdateEmp.html')
 
 @app.route("/gotoaddemp")
 def gotoaddemp():
     return render_template('AddEmp.html')
+
+@app.route("/gotodeleteemp")
+def gotodeleteemp():
+    return render_template('DeleteEmp.html')
 
 @app.route("/zb")
 def zb():
